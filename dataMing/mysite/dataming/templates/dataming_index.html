@@ -1,0 +1,12 @@
+{% extends 'index.html' %}
+{% block content %}
+{% if worklist %}
+	<ul>
+	{% for word in worklist %}
+        <li><a href="{% url 'dataming:label' %}">{{word}}</a></li>
+    {% endfor %}
+	</ul>
+{% else %}
+	<p> No work are availabel.</p>
+{% endif %}
+{% endblock %}

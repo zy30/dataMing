@@ -11,9 +11,11 @@ https://docs.djangoproject.com/en/1.9/ref/settings/
 """
 
 import os
-
+HERE = os.path.dirname(os.path.abspath(__file__))
+HERE = os.path.join(HERE, '../')
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
 
 
 # Quick-start development settings - unsuitable for production
@@ -37,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+	'dataming.apps.DatamingConfig',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -68,6 +71,21 @@ TEMPLATES = [
     },
 ]
 
+# STATIC_ROOT = os.path.join(os.path.abspath(__file__), '../static/')
+# STATIC_URL = '/static/'
+# STATICFILES_DIRS = (
+#     ('css',os.path.join(STATIC_ROOT,'css').replace('\\','/') ),
+#     #os.path.join(os.path.abspath(__file__), '../static/'),
+# )
+
+# Additional locations of static files
+STATICFILES_DIRS = (
+    # Put strings here, like "/home/html/static" or "C:/www/django/static".
+    # Always use forward slashes, even on Windows.
+    # Don't forget to use absolute paths, not relative paths.
+    os.path.join(HERE, 'static/'),
+)
+
 WSGI_APPLICATION = 'mysite.wsgi.application'
 
 
@@ -76,8 +94,12 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'dataming',
+		'USER': 'root',
+		'PASSWORD': '',
+		'HOST': '192.168.121.1',
+		'PORT': '3306',
     }
 }
 
@@ -104,9 +126,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/1.9/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'zh-CN'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Shanghai'
 
 USE_I18N = True
 
@@ -119,3 +141,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
 
 STATIC_URL = '/static/'
+
+#login redirect url
+LOGIN_REDIRECT_URL = '/dataming/label/'

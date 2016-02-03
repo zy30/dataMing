@@ -1,0 +1,67 @@
+{% extends 'index.html' %}
+{% block content %}
+<div class="container contents">
+	<div class="row">
+		<div class="col-xs-12">
+			<article>
+				<div class="article-title">
+					<h1> {{ article.title }}</h1>
+				</div>
+				{% if error_message %}<p style="color:red"><strong>{{ error_message }}</strong></p>{% endif %}
+				<div class="article-content">
+					{% autoescape off %}
+					<pre>
+					{{ article.content}}
+					</pre>
+					{% endautoescape %}
+				</div>
+
+				</p>
+			</article>
+			<hr/>
+			<div class="opt " id="opt">
+				<form action="{% url 'dataming:submit' article.id %}" class="form-horizontal" method="post">
+					{% csrf_token %}
+
+
+					<div class="container">
+						<p class="f-w">舆情分类标签：</p>
+
+						<div class="levelOne">
+							<div class="row">
+								{% for levelOne in levelOneLists %}
+								<div class="radio col-xs-2">
+									<label for="levelOne{{ forloop.counter }}">
+										<input type="radio" name="levelOne" id="levelOne{{ forloop.counter }}"
+											   value="{{ levelOne }} "/>
+										{{ levelOne }}</label>
+								</div>
+								{% endfor %}
+							</div>
+						</div>
+						<p class="m-10 f-w">情感分类标签：</p>
+
+						<div class="sentiment">
+							<div class="row">
+								{% for sentiment in sentimentType %}
+								<div class="radio col-xs-2">
+									<label for="sentiment{{ forloop.counter }}">
+										<input type="radio" name="sentiment" id="sentiment{{ forloop.counter }}"
+											   value="{{ sentiment }} "/>
+										{{ sentiment }}</label>
+								</div>
+								{% endfor %}
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-xs-12 submit-button">
+								<input type="submit" value="提交"/>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}

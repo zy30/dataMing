@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Mark</title>
+	<link rel="stylesheet" href="http://192.168.126.128:8080/static/css/bootstrap.min.css">
+	<link rel="stylesheet" href="http://192.168.126.128:8080/static/css/login.css">
+</head>
+<body>
+	<div class="header">
+		<div class="container">
+			<div class="row">
+				<div class="col-xs-12 logo">
+					<img src="http://192.168.126.128:8080/static/images/logo.png" alt="">
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="main login">
+		<div class="container ">
+			<div class="row">
+				<div class="col-xs-6 pic">
+				</div>
+				<div class="col-xs-6  log-menu">
+					<div class="log-bar">
+						<!-- <p>用户登录：</p> -->
+						<!--<form action="">-->
+							<!--<div class="form-group row">-->
+								<!--<lable class="control-label col-xs-4">用户名：</lable>-->
+								<!--<div class="col-xs-8"><input type="text"></div>-->
+							<!--</div>-->
+							<!--<div class="form-group row">-->
+								<!--<lable class="control-label col-xs-4">密码：</lable>-->
+								<!--<div class="col-xs-8"><input type="text"></div>-->
+							<!--</div>-->
+							<!--<div class="row submit">-->
+								<!--<button type="button" class="submit-button">登录</button>-->
+							<!--</div>-->
+						<!--</form>-->
+						{% block login %} {% endblock %}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="footer">
+		<div class="container ">
+			<div class="row">
+				<div class="col-xs-12 ">
+					<p>Copyright@2016 中国电子科技网络信息安全有限公司. All Rights Reserved. 温馨提示:建议使用IE10以上浏览器</p>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

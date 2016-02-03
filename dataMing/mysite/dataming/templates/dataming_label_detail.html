@@ -1,0 +1,37 @@
+{% extends 'dataming_base.html' %}
+{% block content %}
+<div>
+	<div class="main-block">
+		<div class="article-title">
+			<h1> {{ article.title }}</h1>
+		</div>
+		{% if error_message %}<p style="color:red"><strong>{{ error_message }}</strong></p>{% endif %}
+		<div class="article-content">
+			{% autoescape off %}
+			{{ article.content}}
+			{% endautoescape %}
+		</div>
+		<div class="label-block">
+			<form action="{% url 'dataming:submit' article.id %}" method="post">
+				{% csrf_token %}
+				<div class="levelOne">
+					{% for onelist in levelOneLists %}
+					{% for levelOne in onelist %}
+					<input type="radio" name="levelOne" id="levelOne{{ forloop.counter }}" value="{{ levelOne }} "/>
+					<label for="levelOne{{ forloop.counter }}">{{ levelOne }}</label>
+					{% endfor %}
+					</br>
+					{% endfor %}
+				</div>
+				<div class="sentiment">
+					{% for sentiment in sentimentType %}
+					<input type="radio" name="sentiment" id="sentiment{{ forloop.counter }}" value="{{ sentiment }} "/>
+					<label for="sentiment{{ forloop.counter }}">{{ sentiment }}</label>
+					{% endfor %}
+				</div>
+				<input type="submit" value="提交" />
+			</form>
+		</div>
+	</div>
+</div>
+{% endblock %}
