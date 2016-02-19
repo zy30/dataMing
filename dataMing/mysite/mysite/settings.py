@@ -144,3 +144,6 @@ STATIC_URL = '/static/'
 
 #login redirect url
 LOGIN_REDIRECT_URL = '/dataming/label/'
+
+
+LOGIN_URL = '/accounts/login/'

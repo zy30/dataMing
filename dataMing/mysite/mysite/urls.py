@@ -15,12 +15,16 @@ Including another URLconf
 """
 from django.conf.urls import url,include
 from django.contrib import admin
+from django.contrib.auth import views as auth_views
 import settings
 
 urlpatterns = [
+    url(r'^$',auth_views.login),
     url(r'^admin/', admin.site.urls),
 	url(r'^dataming/',include('dataming.urls')),
-    url('^', include('django.contrib.auth.urls')),
+    url(r'^accounts/', include('django.contrib.auth.urls')),
+    #url(r'^accounts/login/$', 'django.contrib.auth.views.login'),
+    url(r'^accounts/login/$', auth_views.login),
+    url(r'^accounts/logout/$',auth_views.logout)
     #url( r'^static/(?P<path>.*)$', 'django.views.static.serve',{ 'document_root': settings.STATIC_ROOT }),
-
 ]

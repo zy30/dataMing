@@ -9,7 +9,7 @@
 }
 .pic{
 	height: 600px;
-	background: url(http://192.168.126.128:8080/static/images/6_03.png) center center no-repeat;
+	background: url(../images/6_03.png) center center no-repeat;
 }
 .log-menu{
 	height: 600px;
@@ -27,7 +27,7 @@
 
 }
 .submit{
-	margin-top: 60px;
+	margin-top: 40px;
 	text-align: center;
 }
 .submit-button{
@@ -35,5 +35,20 @@
 	background-color: #c4c7a3;
 	border: 0;
 	color: #fff;
-	width:180px;
+	width:120px;
+}
+.login-row{
+	margin-top: 15px;
+}
+.lost-p{
+	padding-top: 10px;
+    text-align: center;
+}
+.login-row label{
+	margin: 10px 10px 0;
+}
+.login-row input{
+	margin-top: 10px;
+	border: 1px solid #ddd;
+    padding: 5px
 }

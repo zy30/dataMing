@@ -1,7 +1,9 @@
 {% extends 'index.html' %}
 {% block content %}
+
 {% if article_list %}
 	<ul class="arricle-lists">
+		<h3>打标内容：</h3>
 	{% for article in article_list %}
 	<li><a href="{% url 'dataming:label_detail' article.id %}">{{article.title}}</a></li>
 	{% endfor %}

@@ -2,7 +2,9 @@
 from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponse,HttpResponseRedirect
 from django.core.urlresolvers import reverse
-from .models import Article, User
+from .models import Article
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import logout
 import string
 # Create your views here.
 
@@ -11,29 +13,37 @@ levelOneClassTypeList = ['其他类', '社会维稳', '城市形象', '生态环
 sentimentType = ['反动', '敏感', '负面', '中立', '正面']
 # levelOneLists = [levelOneClassTypeList[i:i + 5] for i in range(0, len(levelOneClassTypeList), 5)]
 
-
+@login_required
 def dataming_index(request):
 	worklist = ["我要打标"]
+	username = request.user.username
 	context = {
 		'worklist': worklist,
+		'username': username,
 	}
 	return render(request, 'dataming_index.html', context)
 
-
+@login_required
 def dataming_label(request):
+	username = request.user.username
+	if not request.user.is_authenticated():
+		return HttpResponseRedirect('login/?next=%s' % request.path)
 	article_list = Article.objects.filter(labeled=False).order_by("id")[:5]
 	context = {
 		'article_list': article_list,
+		'username': username,
 	}
 	return render(request, 'dataming_label_index.html', context)
 
 
 def dataming_label_detail(request, article_id):
 	article = get_object_or_404(Article, pk=article_id)
+	username = request.user.username
 	context = {
 		'article': article,
 		'levelOneLists': levelOneClassTypeList,
 		'sentimentType': sentimentType,
+		'username': username,
 	}
 	return render(request, 'dataming_label_detail_new.html', context)
 
@@ -43,6 +53,7 @@ def dataming_label_result(request):
 
 
 def submit(request, article_id):
+	username = request.user.username
 	p = get_object_or_404(Article, pk=article_id)
 	if not request.POST.has_key('levelOne') or not request.POST.has_key('sentiment'):
 		context = {
@@ -50,17 +61,20 @@ def submit(request, article_id):
 			"error_message":"you did not select a choice!",
 			'levelOneLists': levelOneClassTypeList,
 			'sentimentType': sentimentType,
+			'username': username,
 		}
 		return render(request,'dataming_label_detail_new.html',context)
 	else:
 		try:
 			levelOne = request.POST['levelOne']
 			sentiment = request.POST['sentiment']
+			curuser = request.user.username
 			print levelOne,sentiment
 			levelOneindex = levelOneClassTypeList.index(levelOne.strip().encode("utf-8"))
 			sentimentindex = sentimentType.index(sentiment.strip().encode("utf-8"))+1
 			p.levelOneClassType = levelOneindex
 			p.sentimentType = sentimentindex
+			p.username = curuser
 			p.labeled = True
 			p.save()
 			article_list = Article.objects.filter(labeled=False).order_by("id")
@@ -72,6 +86,7 @@ def submit(request, article_id):
 					'article': article_new,
 					'levelOneLists': levelOneClassTypeList,
 					'sentimentType': sentimentType,
+					'username': username,
 				}
 				print article_new.id
 				return HttpResponseRedirect(reverse('dataming:label_detail',args=(article_new.id,)))  #becareful :add url namespace
@@ -82,6 +97,7 @@ def submit(request, article_id):
 				"error_message":"you select choice is not right!",
 				'levelOneLists': levelOneClassTypeList,
 				'sentimentType': sentimentType,
+				'username': username,
 			}
 			return render(request,'dataming_label_detail.html',context)
 
@@ -103,4 +119,8 @@ def submit(request, article_id):
 	# 		'article': p,
 	# 		'errot_message': "You did not select a choice."
 	# 	})
-	return HttpResponse("submit")
+	# return HttpResponse("submit")
+
+def logout_view(request):
+	logout(request)
+	return render(request,'registration/index.html')
